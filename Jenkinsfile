@@ -11,7 +11,8 @@ pipeline {
 
     stage('Checkout Source') {
       steps {
-        git 'https://github.com/adilson-tavares/react-app-deploy-jenkins.git'
+        git branch: 'main', url: 'https://github.com/adilson-tavares/react-app-deploy-jenkins.git',
+        credentialsId: 'github-credentials'
       }
     }
 
