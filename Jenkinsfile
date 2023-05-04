@@ -1,15 +1,15 @@
 pipeline {
 
-  // environment {
-  //   dockerimagename = "tavarescruz/react-app"
-  //   dockerImage = ""
-  // }
+  environment {
+    dockerimagename = "tavarescruz/react-app"
+    dockerImage = ""
+  }
 
   agent any
 
-  environment {
-    DOCKERHUB_CREDENTIALS = credentials('dokcerhub-credentials')
-  }
+  // environment {
+  //   DOCKERHUB_CREDENTIALS = credentials('dokcerhub-credentials')
+  // }
 
   stages {
     stage('Checkout Source') {
