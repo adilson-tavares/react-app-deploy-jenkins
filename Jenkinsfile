@@ -19,7 +19,8 @@ pipeline {
     stage('Build image') {
       steps{
         script {
-          dockerImage = docker.build dockerimagename
+        //   dockerImage = docker.build dockerimagename
+        sh 'docker build -t tavarescruz/react-app .'
         }
       }
     }
