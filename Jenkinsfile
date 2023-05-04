@@ -1,9 +1,9 @@
 pipeline {
 
-  environment {
-    dockerimagename = "tavarescruz/react-app"
-    dockerImage = ""
-  }
+  // environment {
+  //   dockerimagename = "tavarescruz/react-app"
+  //   dockerImage = ""
+  // }
 
   agent any
 
