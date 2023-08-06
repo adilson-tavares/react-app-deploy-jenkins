@@ -81,11 +81,7 @@ pipeline {
         }
       }
     }
-    post {
-      always {
-        sh 'docker logout'
-      }
-    }
+
 
     stage('Deploying React.js container to Kubernetes') {
       steps {
@@ -93,6 +89,12 @@ pipeline {
           kubernetesDeploy(configs: "deployment-app.yaml", "service-app.yaml")
         }
       }
+    }
+
+  }
+  post {
+    always {
+      sh 'docker logout'
     }
   }
 
