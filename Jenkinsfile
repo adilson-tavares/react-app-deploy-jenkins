@@ -6,7 +6,7 @@ pipeline {
   }
 
   agent {
-        kubernetes {
+    kubernetes {
       yaml '''
         apiVersion: v1
         kind: Pod
@@ -76,8 +76,10 @@ pipeline {
       steps {
         container('docker') {
           sh 'docker push tavarescruz/react-app:latest'
+        }
       }
     }
+
     stage('Deploying React.js container to Kubernetes') {
       steps {
         script {
