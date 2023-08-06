@@ -5,9 +5,11 @@ pipeline {
     dockerImage = ""
   }
 
-    agent {
-        docker { image 'node:18.16.0-alpine' }
-    }
+  agent any
+
+    // agent {
+    //     docker { image 'node:18.16.0-alpine' }
+    // }
 
   // environment {
   //   DOCKERHUB_CREDENTIALS = credentials('dokcerhub-credentials')
@@ -29,7 +31,7 @@ pipeline {
     }
     stage('Pushing Image') {
       environment {
-               registryCredential = 'dockerhub-credentials'
+               registryCredential = 'docker-hub-credential'
            }
       steps{
         script {
