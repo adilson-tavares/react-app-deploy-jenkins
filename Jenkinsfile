@@ -45,21 +45,37 @@ pipeline {
     }
     stage('Build image') {
       steps{
-        script {
-          dockerImage = docker.build dockerimagename
+        // script {
+        //   dockerImage = docker.build dockerimagename
+        // }
+        container('docker') {
+           sh 'docker build -t tavarescruz/react-app:latest .'
         }
       }
     }
     stage('Pushing Image') {
+
       environment {
-               registryCredential = 'docker-hub-credential'
-           }
-      steps{
-        script {
-          docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) {
-            dockerImage.push("latest")
-          }
-        }
+          registryCredential = credentials('docker-hub-credential')
+      }
+      steps {
+        sh 'echo $registryCredential_PSW | docker login -u $registryCredential_USR --password-stdin'
+      }
+      // environment {
+      //          registryCredential = 'docker-hub-credential'
+      //      }
+      // steps{
+      //   script {
+      //     docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) {
+      //       dockerImage.push("latest")
+      //     }
+      //   }
+      // }
+    }
+    stage('Push Image to DockerHub') {
+      steps {
+        container('docker') {
+          sh 'docker push tavarescruz/react-app:latest'
       }
     }
     stage('Deploying React.js container to Kubernetes') {
