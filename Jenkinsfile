@@ -1,8 +1,11 @@
 pipeline {
 
+  // environment {
+  //   dockerimagename = "tavarescruz/react-app"
+  //   dockerImage = ""
+  // }
   environment {
-    dockerimagename = "tavarescruz/react-app"
-    dockerImage = ""
+    registryCredential = credentials('docker-hub-credential')
   }
 
   agent {
@@ -55,11 +58,10 @@ pipeline {
     }
     stage('Pushing Image') {
 
-      environment {
-          registryCredential = credentials('docker-hub-credential')
-      }
       steps {
-        sh 'echo $registryCredential_PSW | docker login -u $registryCredential_USR --password-stdin'
+        container('docker') {
+          sh 'echo $registryCredential_PSW | docker login -u $registryCredential_USR --password-stdin'
+        }
       }
       // environment {
       //          registryCredential = 'docker-hub-credential'
@@ -77,6 +79,11 @@ pipeline {
         container('docker') {
           sh 'docker push tavarescruz/react-app:latest'
         }
+      }
+    }
+    post {
+      always {
+        sh 'docker logout'
       }
     }
 
